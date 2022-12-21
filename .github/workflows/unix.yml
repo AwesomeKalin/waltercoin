@@ -1,0 +1,33 @@
+name: 'Build waltercoin for Linux'
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - 1.0
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Depenedencies
+              run: |
+                sudo apt-get install build-essential libtool autotools-dev automake pkg-config bsdmainutils python3
+                sudo apt-get install libevent-dev libboost-dev
+                sudo apt install libsqlite3-dev
+                sudo apt install libminiupnpc-dev libnatpmp-dev
+                sudo apt-get install libzmq3-dev
+                sudo apt install systemtap-sdt-dev
+                sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools
+                sudo apt install qtwayland5
+                sudo apt-get install libqrencode-dev
+            
+            - name: Checkout repo
+              uses: actions/checkout@v3
+              
+            - name: Build waltercoin
+              run: |
+                ./autogen.sh
+                ./configure
+                make
+                ls
