@@ -1,7 +1,6 @@
 name: 'Build waltercoin for Linux'
 
 on:
-    workflow_dispatch:
     push:
         branches:
             - 1.0
@@ -30,4 +29,22 @@ jobs:
                 ./autogen.sh
                 ./configure
                 make
+            
+            - name: Strip Executables
+              run: |
+                cd ./src
                 ls
+                strip waltercoind
+                strip waltercoin-qt
+            
+            - name: Upload waltercoind to artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: waltercoind (Linux)
+                path: ./src/waltercoind
+                
+            - name: Upload waltercoin-qt to artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: waltercoin-qt (Linux)
+                path: ./src/waltercoin-qt

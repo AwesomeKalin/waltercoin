@@ -1,0 +1,33 @@
+# /etc/conf.d/waltercoind: config file for /etc/init.d/waltercoind
+
+# Config file location
+#WALTERCOIND_CONFIGFILE="/etc/waltercoin/waltercoin.conf"
+
+# What directory to write pidfile to?  (created and owned by $WALTERCOIND_USER)
+#WALTERCOIND_PIDDIR="/var/run/waltercoind"
+
+# What filename to give the pidfile
+#WALTERCOIND_PIDFILE="${WALTERCOIND_PIDDIR}/waltercoind.pid"
+
+# Where to write waltercoind data (be mindful that the blockchain is large)
+#WALTERCOIND_DATADIR="/var/lib/waltercoind"
+
+# User and group to own waltercoind process
+#WALTERCOIND_USER="waltercoin"
+#WALTERCOIND_GROUP="waltercoin"
+
+# Path to waltercoind executable
+#WALTERCOIND_BIN="/usr/bin/waltercoind"
+
+# Nice value to run waltercoind under
+#WALTERCOIND_NICE=0
+
+# Additional options (avoid -conf and -datadir, use flags above)
+#WALTERCOIND_OPTS=""
+
+# The timeout in seconds OpenRC will wait for waltercoind to terminate
+# after a SIGTERM has been raised.
+# Note that this will be mapped as argument to start-stop-daemon's
+# '--retry' option, which means you can specify a retry schedule
+# here. For more information see man 8 start-stop-daemon.
+WALTERCOIND_SIGTERM_TIMEOUT=600

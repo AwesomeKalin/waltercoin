@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+#
+#  waltercoind The waltercoin core server.
+#
+#
+# chkconfig: 345 80 20
+# description: waltercoind
+# processname: waltercoind
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# you can override defaults in /etc/sysconfig/waltercoind, see below
+if [ -f /etc/sysconfig/waltercoind ]; then
+        . /etc/sysconfig/waltercoind
+fi
+
+RETVAL=0
+
+prog=waltercoind
+# you can override the lockfile via WALTERCOIND_LOCKFILE in /etc/sysconfig/waltercoind
+lockfile=${WALTERCOIND_LOCKFILE-/var/lock/subsys/waltercoind}
+
+# waltercoind defaults to /usr/bin/waltercoind, override with WALTERCOIND_BIN
+waltercoind=${WALTERCOIND_BIN-/usr/bin/waltercoind}
+
+# waltercoind opts default to -disablewallet, override with WALTERCOIND_OPTS
+waltercoind_opts=${WALTERCOIND_OPTS--disablewallet}
+
+start() {
+    echo -n $"Starting $prog: "
+    daemon $DAEMONOPTS $waltercoind $waltercoind_opts
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch $lockfile
+    return $RETVAL
+}
+
+stop() {
+    echo -n $"Stopping $prog: "
+    killproc $prog -t600
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && rm -f $lockfile
+    return $RETVAL
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status $prog
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    *)
+        echo "Usage: service $prog {start|stop|status|restart}"
+        exit 1
+        ;;
+esac

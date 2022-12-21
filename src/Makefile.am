@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2016 The Bitcoin Core developers
+# Copyright (c) 2013-2016 The Waltercoin Core developers
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -23,49 +23,49 @@ noinst_PROGRAMS =
 TESTS =
 BENCHMARKS =
 
-BITCOIN_INCLUDES=-I$(builddir) -I$(srcdir)/$(MINISKETCH_INCLUDE_DIR_INT) -I$(srcdir)/secp256k1/include -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT) $(LEVELDB_CPPFLAGS)
+WALTERCOIN_INCLUDES=-I$(builddir) -I$(srcdir)/$(MINISKETCH_INCLUDE_DIR_INT) -I$(srcdir)/secp256k1/include -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT) $(LEVELDB_CPPFLAGS)
 
-LIBBITCOIN_NODE=libbitcoin_node.a
-LIBBITCOIN_COMMON=libbitcoin_common.a
-LIBBITCOIN_CONSENSUS=libbitcoin_consensus.a
-LIBBITCOIN_CLI=libbitcoin_cli.a
-LIBBITCOIN_UTIL=libbitcoin_util.a
-LIBBITCOIN_CRYPTO_BASE=crypto/libbitcoin_crypto_base.la
-LIBBITCOINQT=qt/libbitcoinqt.a
+LIBWALTERCOIN_NODE=libwaltercoin_node.a
+LIBWALTERCOIN_COMMON=libwaltercoin_common.a
+LIBWALTERCOIN_CONSENSUS=libwaltercoin_consensus.a
+LIBWALTERCOIN_CLI=libwaltercoin_cli.a
+LIBWALTERCOIN_UTIL=libwaltercoin_util.a
+LIBWALTERCOIN_CRYPTO_BASE=crypto/libwaltercoin_crypto_base.la
+LIBWALTERCOINQT=qt/libwaltercoinqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 
 if ENABLE_ZMQ
-LIBBITCOIN_ZMQ=libbitcoin_zmq.a
+LIBWALTERCOIN_ZMQ=libwaltercoin_zmq.a
 endif
-if BUILD_BITCOIN_LIBS
-LIBBITCOINCONSENSUS=libbitcoinconsensus.la
+if BUILD_WALTERCOIN_LIBS
+LIBWALTERCOINCONSENSUS=libwaltercoinconsensus.la
 endif
-if BUILD_BITCOIN_KERNEL_LIB
-LIBBITCOINKERNEL=libbitcoinkernel.la
+if BUILD_WALTERCOIN_KERNEL_LIB
+LIBWALTERCOINKERNEL=libwaltercoinkernel.la
 endif
 if ENABLE_WALLET
-LIBBITCOIN_WALLET=libbitcoin_wallet.a
-LIBBITCOIN_WALLET_TOOL=libbitcoin_wallet_tool.a
+LIBWALTERCOIN_WALLET=libwaltercoin_wallet.a
+LIBWALTERCOIN_WALLET_TOOL=libwaltercoin_wallet_tool.a
 endif
 
-LIBBITCOIN_CRYPTO = $(LIBBITCOIN_CRYPTO_BASE)
+LIBWALTERCOIN_CRYPTO = $(LIBWALTERCOIN_CRYPTO_BASE)
 if ENABLE_SSE41
-LIBBITCOIN_CRYPTO_SSE41 = crypto/libbitcoin_crypto_sse41.la
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_SSE41)
+LIBWALTERCOIN_CRYPTO_SSE41 = crypto/libwaltercoin_crypto_sse41.la
+LIBWALTERCOIN_CRYPTO += $(LIBWALTERCOIN_CRYPTO_SSE41)
 endif
 if ENABLE_AVX2
-LIBBITCOIN_CRYPTO_AVX2 = crypto/libbitcoin_crypto_avx2.la
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_AVX2)
+LIBWALTERCOIN_CRYPTO_AVX2 = crypto/libwaltercoin_crypto_avx2.la
+LIBWALTERCOIN_CRYPTO += $(LIBWALTERCOIN_CRYPTO_AVX2)
 endif
 if ENABLE_X86_SHANI
-LIBBITCOIN_CRYPTO_X86_SHANI = crypto/libbitcoin_crypto_x86_shani.la
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_X86_SHANI)
+LIBWALTERCOIN_CRYPTO_X86_SHANI = crypto/libwaltercoin_crypto_x86_shani.la
+LIBWALTERCOIN_CRYPTO += $(LIBWALTERCOIN_CRYPTO_X86_SHANI)
 endif
 if ENABLE_ARM_SHANI
-LIBBITCOIN_CRYPTO_ARM_SHANI = crypto/libbitcoin_crypto_arm_shani.la
-LIBBITCOIN_CRYPTO += $(LIBBITCOIN_CRYPTO_ARM_SHANI)
+LIBWALTERCOIN_CRYPTO_ARM_SHANI = crypto/libwaltercoin_crypto_arm_shani.la
+LIBWALTERCOIN_CRYPTO += $(LIBWALTERCOIN_CRYPTO_ARM_SHANI)
 endif
-noinst_LTLIBRARIES += $(LIBBITCOIN_CRYPTO)
+noinst_LTLIBRARIES += $(LIBWALTERCOIN_CRYPTO)
 
 $(LIBSECP256K1): $(wildcard secp256k1/src/*.h) $(wildcard secp256k1/src/*.c) $(wildcard secp256k1/include/*)
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C $(@D) $(@F)
@@ -73,49 +73,49 @@ $(LIBSECP256K1): $(wildcard secp256k1/src/*.h) $(wildcard secp256k1/src/*.c) $(w
 # Make is not made aware of per-object dependencies to avoid limiting building parallelization
 # But to build the less dependent modules first, we manually select their order here:
 EXTRA_LIBRARIES += \
-  $(LIBBITCOIN_UTIL) \
-  $(LIBBITCOIN_COMMON) \
-  $(LIBBITCOIN_CONSENSUS) \
-  $(LIBBITCOIN_NODE) \
-  $(LIBBITCOIN_CLI) \
-  $(LIBBITCOIN_IPC) \
-  $(LIBBITCOIN_WALLET) \
-  $(LIBBITCOIN_WALLET_TOOL) \
-  $(LIBBITCOIN_ZMQ)
+  $(LIBWALTERCOIN_UTIL) \
+  $(LIBWALTERCOIN_COMMON) \
+  $(LIBWALTERCOIN_CONSENSUS) \
+  $(LIBWALTERCOIN_NODE) \
+  $(LIBWALTERCOIN_CLI) \
+  $(LIBWALTERCOIN_IPC) \
+  $(LIBWALTERCOIN_WALLET) \
+  $(LIBWALTERCOIN_WALLET_TOOL) \
+  $(LIBWALTERCOIN_ZMQ)
 
-if BUILD_BITCOIND
-  bin_PROGRAMS += bitcoind
+if BUILD_WALTERCOIND
+  bin_PROGRAMS += waltercoind
 endif
 
-if BUILD_BITCOIN_NODE
-  bin_PROGRAMS += bitcoin-node
+if BUILD_WALTERCOIN_NODE
+  bin_PROGRAMS += waltercoin-node
 endif
 
-if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += bitcoin-cli
+if BUILD_WALTERCOIN_CLI
+  bin_PROGRAMS += waltercoin-cli
 endif
 
-if BUILD_BITCOIN_TX
-  bin_PROGRAMS += bitcoin-tx
+if BUILD_WALTERCOIN_TX
+  bin_PROGRAMS += waltercoin-tx
 endif
 
 if ENABLE_WALLET
-if BUILD_BITCOIN_WALLET
-  bin_PROGRAMS += bitcoin-wallet
+if BUILD_WALTERCOIN_WALLET
+  bin_PROGRAMS += waltercoin-wallet
 endif
 endif
 
-if BUILD_BITCOIN_UTIL
-  bin_PROGRAMS += bitcoin-util
+if BUILD_WALTERCOIN_UTIL
+  bin_PROGRAMS += waltercoin-util
 endif
 
-if BUILD_BITCOIN_CHAINSTATE
-  bin_PROGRAMS += bitcoin-chainstate
+if BUILD_WALTERCOIN_CHAINSTATE
+  bin_PROGRAMS += waltercoin-chainstate
 endif
 
 .PHONY: FORCE check-symbols check-security
-# bitcoin core #
-BITCOIN_CORE_H = \
+# waltercoin core #
+WALTERCOIN_CORE_H = \
   addrdb.h \
   addrman.h \
   addrman_impl.h \
@@ -342,16 +342,16 @@ obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
 	@$(top_srcdir)/share/genbuild.sh "$(abs_top_builddir)/src/obj/build.h" \
 	  "$(abs_top_srcdir)"
-libbitcoin_util_a-clientversion.$(OBJEXT): obj/build.h
+libwaltercoin_util_a-clientversion.$(OBJEXT): obj/build.h
 
 
-# server: shared between bitcoind and bitcoin-qt
+# server: shared between waltercoind and waltercoin-qt
 # Contains code accessing mempool and chain state that is meant to be separated
 # from wallet and gui code (see node/README.md). Shared code should go in
-# libbitcoin_common or libbitcoin_util libraries, instead.
-libbitcoin_node_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS) $(MINIUPNPC_CPPFLAGS) $(NATPMP_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
-libbitcoin_node_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_node_a_SOURCES = \
+# libwaltercoin_common or libwaltercoin_util libraries, instead.
+libwaltercoin_node_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(BOOST_CPPFLAGS) $(MINIUPNPC_CPPFLAGS) $(NATPMP_CPPFLAGS) $(EVENT_CFLAGS) $(EVENT_PTHREADS_CFLAGS)
+libwaltercoin_node_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_node_a_SOURCES = \
   addrdb.cpp \
   addrman.cpp \
   banman.cpp \
@@ -428,20 +428,20 @@ libbitcoin_node_a_SOURCES = \
   validation.cpp \
   validationinterface.cpp \
   versionbits.cpp \
-  $(BITCOIN_CORE_H)
+  $(WALTERCOIN_CORE_H)
 
 if ENABLE_WALLET
-libbitcoin_node_a_SOURCES += wallet/init.cpp
-libbitcoin_node_a_CPPFLAGS += $(BDB_CPPFLAGS)
+libwaltercoin_node_a_SOURCES += wallet/init.cpp
+libwaltercoin_node_a_CPPFLAGS += $(BDB_CPPFLAGS)
 endif
 if !ENABLE_WALLET
-libbitcoin_node_a_SOURCES += dummywallet.cpp
+libwaltercoin_node_a_SOURCES += dummywallet.cpp
 endif
 
 if ENABLE_ZMQ
-libbitcoin_zmq_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(ZMQ_CFLAGS)
-libbitcoin_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_zmq_a_SOURCES = \
+libwaltercoin_zmq_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(ZMQ_CFLAGS)
+libwaltercoin_zmq_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_zmq_a_SOURCES = \
   zmq/zmqabstractnotifier.cpp \
   zmq/zmqnotificationinterface.cpp \
   zmq/zmqpublishnotifier.cpp \
@@ -450,11 +450,11 @@ libbitcoin_zmq_a_SOURCES = \
 endif
 
 
-# wallet: shared between bitcoind and bitcoin-qt, but only linked
+# wallet: shared between waltercoind and waltercoin-qt, but only linked
 # when wallet enabled
-libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS) $(BDB_CPPFLAGS) $(SQLITE_CFLAGS)
-libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_wallet_a_SOURCES = \
+libwaltercoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(BOOST_CPPFLAGS) $(BDB_CPPFLAGS) $(SQLITE_CFLAGS)
+libwaltercoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_wallet_a_SOURCES = \
   wallet/coincontrol.cpp \
   wallet/context.cpp \
   wallet/crypter.cpp \
@@ -482,32 +482,32 @@ libbitcoin_wallet_a_SOURCES = \
   wallet/walletdb.cpp \
   wallet/walletutil.cpp \
   wallet/coinselection.cpp \
-  $(BITCOIN_CORE_H)
+  $(WALTERCOIN_CORE_H)
 
 if USE_SQLITE
-libbitcoin_wallet_a_SOURCES += wallet/sqlite.cpp
+libwaltercoin_wallet_a_SOURCES += wallet/sqlite.cpp
 endif
 if USE_BDB
-libbitcoin_wallet_a_SOURCES += wallet/bdb.cpp wallet/salvage.cpp
+libwaltercoin_wallet_a_SOURCES += wallet/bdb.cpp wallet/salvage.cpp
 endif
 
-libbitcoin_wallet_tool_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS)
-libbitcoin_wallet_tool_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_wallet_tool_a_SOURCES = \
+libwaltercoin_wallet_tool_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(BOOST_CPPFLAGS)
+libwaltercoin_wallet_tool_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_wallet_tool_a_SOURCES = \
   wallet/wallettool.cpp \
-  $(BITCOIN_CORE_H)
+  $(WALTERCOIN_CORE_H)
 
 # crypto primitives library
-crypto_libbitcoin_crypto_base_la_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libwaltercoin_crypto_base_la_CPPFLAGS = $(AM_CPPFLAGS)
 
 # Specify -static in both CXXFLAGS and LDFLAGS so libtool will only build a
 # static version of this library. We don't need a dynamic version, and a dynamic
 # version can't be used on windows anyway because the library doesn't currently
 # export DLL symbols.
-crypto_libbitcoin_crypto_base_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
-crypto_libbitcoin_crypto_base_la_LDFLAGS = $(AM_LDFLAGS) -static
+crypto_libwaltercoin_crypto_base_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
+crypto_libwaltercoin_crypto_base_la_LDFLAGS = $(AM_LDFLAGS) -static
 
-crypto_libbitcoin_crypto_base_la_SOURCES = \
+crypto_libwaltercoin_crypto_base_la_SOURCES = \
   crypto/aes.cpp \
   crypto/aes.h \
   crypto/chacha_poly_aead.h \
@@ -539,49 +539,49 @@ crypto_libbitcoin_crypto_base_la_SOURCES = \
   crypto/siphash.h
 
 if USE_ASM
-crypto_libbitcoin_crypto_base_la_SOURCES += crypto/sha256_sse4.cpp
+crypto_libwaltercoin_crypto_base_la_SOURCES += crypto/sha256_sse4.cpp
 endif
 
-# See explanation for -static in crypto_libbitcoin_crypto_base_la's LDFLAGS and
+# See explanation for -static in crypto_libwaltercoin_crypto_base_la's LDFLAGS and
 # CXXFLAGS above
-crypto_libbitcoin_crypto_sse41_la_LDFLAGS = $(AM_LDFLAGS) -static
-crypto_libbitcoin_crypto_sse41_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
-crypto_libbitcoin_crypto_sse41_la_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libbitcoin_crypto_sse41_la_CXXFLAGS += $(SSE41_CXXFLAGS)
-crypto_libbitcoin_crypto_sse41_la_CPPFLAGS += -DENABLE_SSE41
-crypto_libbitcoin_crypto_sse41_la_SOURCES = crypto/sha256_sse41.cpp
+crypto_libwaltercoin_crypto_sse41_la_LDFLAGS = $(AM_LDFLAGS) -static
+crypto_libwaltercoin_crypto_sse41_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
+crypto_libwaltercoin_crypto_sse41_la_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libwaltercoin_crypto_sse41_la_CXXFLAGS += $(SSE41_CXXFLAGS)
+crypto_libwaltercoin_crypto_sse41_la_CPPFLAGS += -DENABLE_SSE41
+crypto_libwaltercoin_crypto_sse41_la_SOURCES = crypto/sha256_sse41.cpp
 
-# See explanation for -static in crypto_libbitcoin_crypto_base_la's LDFLAGS and
+# See explanation for -static in crypto_libwaltercoin_crypto_base_la's LDFLAGS and
 # CXXFLAGS above
-crypto_libbitcoin_crypto_avx2_la_LDFLAGS = $(AM_LDFLAGS) -static
-crypto_libbitcoin_crypto_avx2_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
-crypto_libbitcoin_crypto_avx2_la_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libbitcoin_crypto_avx2_la_CXXFLAGS += $(AVX2_CXXFLAGS)
-crypto_libbitcoin_crypto_avx2_la_CPPFLAGS += -DENABLE_AVX2
-crypto_libbitcoin_crypto_avx2_la_SOURCES = crypto/sha256_avx2.cpp
+crypto_libwaltercoin_crypto_avx2_la_LDFLAGS = $(AM_LDFLAGS) -static
+crypto_libwaltercoin_crypto_avx2_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
+crypto_libwaltercoin_crypto_avx2_la_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libwaltercoin_crypto_avx2_la_CXXFLAGS += $(AVX2_CXXFLAGS)
+crypto_libwaltercoin_crypto_avx2_la_CPPFLAGS += -DENABLE_AVX2
+crypto_libwaltercoin_crypto_avx2_la_SOURCES = crypto/sha256_avx2.cpp
 
-# See explanation for -static in crypto_libbitcoin_crypto_base_la's LDFLAGS and
+# See explanation for -static in crypto_libwaltercoin_crypto_base_la's LDFLAGS and
 # CXXFLAGS above
-crypto_libbitcoin_crypto_x86_shani_la_LDFLAGS = $(AM_LDFLAGS) -static
-crypto_libbitcoin_crypto_x86_shani_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
-crypto_libbitcoin_crypto_x86_shani_la_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libbitcoin_crypto_x86_shani_la_CXXFLAGS += $(X86_SHANI_CXXFLAGS)
-crypto_libbitcoin_crypto_x86_shani_la_CPPFLAGS += -DENABLE_X86_SHANI
-crypto_libbitcoin_crypto_x86_shani_la_SOURCES = crypto/sha256_x86_shani.cpp
+crypto_libwaltercoin_crypto_x86_shani_la_LDFLAGS = $(AM_LDFLAGS) -static
+crypto_libwaltercoin_crypto_x86_shani_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
+crypto_libwaltercoin_crypto_x86_shani_la_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libwaltercoin_crypto_x86_shani_la_CXXFLAGS += $(X86_SHANI_CXXFLAGS)
+crypto_libwaltercoin_crypto_x86_shani_la_CPPFLAGS += -DENABLE_X86_SHANI
+crypto_libwaltercoin_crypto_x86_shani_la_SOURCES = crypto/sha256_x86_shani.cpp
 
-# See explanation for -static in crypto_libbitcoin_crypto_base_la's LDFLAGS and
+# See explanation for -static in crypto_libwaltercoin_crypto_base_la's LDFLAGS and
 # CXXFLAGS above
-crypto_libbitcoin_crypto_arm_shani_la_LDFLAGS = $(AM_LDFLAGS) -static
-crypto_libbitcoin_crypto_arm_shani_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
-crypto_libbitcoin_crypto_arm_shani_la_CPPFLAGS = $(AM_CPPFLAGS)
-crypto_libbitcoin_crypto_arm_shani_la_CXXFLAGS += $(ARM_SHANI_CXXFLAGS)
-crypto_libbitcoin_crypto_arm_shani_la_CPPFLAGS += -DENABLE_ARM_SHANI
-crypto_libbitcoin_crypto_arm_shani_la_SOURCES = crypto/sha256_arm_shani.cpp
+crypto_libwaltercoin_crypto_arm_shani_la_LDFLAGS = $(AM_LDFLAGS) -static
+crypto_libwaltercoin_crypto_arm_shani_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -static
+crypto_libwaltercoin_crypto_arm_shani_la_CPPFLAGS = $(AM_CPPFLAGS)
+crypto_libwaltercoin_crypto_arm_shani_la_CXXFLAGS += $(ARM_SHANI_CXXFLAGS)
+crypto_libwaltercoin_crypto_arm_shani_la_CPPFLAGS += -DENABLE_ARM_SHANI
+crypto_libwaltercoin_crypto_arm_shani_la_SOURCES = crypto/sha256_arm_shani.cpp
 
 # consensus: shared between all executables that validate any consensus rules.
-libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libbitcoin_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_consensus_a_SOURCES = \
+libwaltercoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+libwaltercoin_consensus_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_consensus_a_SOURCES = \
   arith_uint256.cpp \
   arith_uint256.h \
   consensus/amount.h \
@@ -599,7 +599,7 @@ libbitcoin_consensus_a_SOURCES = \
   primitives/transaction.h \
   pubkey.cpp \
   pubkey.h \
-  script/bitcoinconsensus.cpp \
+  script/waltercoinconsensus.cpp \
   script/interpreter.cpp \
   script/interpreter.h \
   script/script.cpp \
@@ -615,10 +615,10 @@ libbitcoin_consensus_a_SOURCES = \
   util/strencodings.h \
   version.h
 
-# common: shared between bitcoind, and bitcoin-qt and non-server tools
-libbitcoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libbitcoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_common_a_SOURCES = \
+# common: shared between waltercoind, and waltercoin-qt and non-server tools
+libwaltercoin_common_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+libwaltercoin_common_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_common_a_SOURCES = \
   base58.cpp \
   bech32.cpp \
   chainparams.cpp \
@@ -652,12 +652,12 @@ libbitcoin_common_a_SOURCES = \
   script/signingprovider.cpp \
   script/standard.cpp \
   warnings.cpp \
-  $(BITCOIN_CORE_H)
+  $(WALTERCOIN_CORE_H)
 
 # util: shared between all executables.
-libbitcoin_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS)
-libbitcoin_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_util_a_SOURCES = \
+libwaltercoin_util_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(BOOST_CPPFLAGS)
+libwaltercoin_util_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_util_a_SOURCES = \
   support/lockedpool.cpp \
   chainparamsbase.cpp \
   clientversion.cpp \
@@ -697,182 +697,182 @@ libbitcoin_util_a_SOURCES = \
   util/syscall_sandbox.cpp \
   util/time.cpp \
   util/tokenpipe.cpp \
-  $(BITCOIN_CORE_H)
+  $(WALTERCOIN_CORE_H)
 
 if USE_LIBEVENT
-libbitcoin_util_a_SOURCES += util/url.cpp
+libwaltercoin_util_a_SOURCES += util/url.cpp
 endif
 
-# cli: shared between bitcoin-cli and bitcoin-qt
-libbitcoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libbitcoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libbitcoin_cli_a_SOURCES = \
+# cli: shared between waltercoin-cli and waltercoin-qt
+libwaltercoin_cli_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+libwaltercoin_cli_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoin_cli_a_SOURCES = \
   compat/stdin.h \
   compat/stdin.cpp \
   rpc/client.cpp \
-  $(BITCOIN_CORE_H)
+  $(WALTERCOIN_CORE_H)
 
-nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
+nodist_libwaltercoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
-# bitcoind & bitcoin-node binaries #
-bitcoin_daemon_sources = bitcoind.cpp
-bitcoin_bin_cppflags = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bitcoin_bin_cxxflags = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoin_bin_ldflags = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+# waltercoind & waltercoin-node binaries #
+waltercoin_daemon_sources = waltercoind.cpp
+waltercoin_bin_cppflags = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+waltercoin_bin_cxxflags = $(AM_CXXFLAGS) $(PIE_FLAGS)
+waltercoin_bin_ldflags = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-bitcoin_daemon_sources += bitcoind-res.rc
+waltercoin_daemon_sources += waltercoind-res.rc
 endif
 
-bitcoin_bin_ldadd = \
-  $(LIBBITCOIN_WALLET) \
-  $(LIBBITCOIN_COMMON) \
-  $(LIBBITCOIN_UTIL) \
+waltercoin_bin_ldadd = \
+  $(LIBWALTERCOIN_WALLET) \
+  $(LIBWALTERCOIN_COMMON) \
+  $(LIBWALTERCOIN_UTIL) \
   $(LIBUNIVALUE) \
-  $(LIBBITCOIN_ZMQ) \
-  $(LIBBITCOIN_CONSENSUS) \
-  $(LIBBITCOIN_CRYPTO) \
+  $(LIBWALTERCOIN_ZMQ) \
+  $(LIBWALTERCOIN_CONSENSUS) \
+  $(LIBWALTERCOIN_CRYPTO) \
   $(LIBLEVELDB) \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
 
-bitcoin_bin_ldadd += $(BDB_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(SQLITE_LIBS)
+waltercoin_bin_ldadd += $(BDB_LIBS) $(MINIUPNPC_LIBS) $(NATPMP_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(SQLITE_LIBS)
 
-bitcoind_SOURCES = $(bitcoin_daemon_sources) init/bitcoind.cpp
-bitcoind_CPPFLAGS = $(bitcoin_bin_cppflags)
-bitcoind_CXXFLAGS = $(bitcoin_bin_cxxflags)
-bitcoind_LDFLAGS = $(bitcoin_bin_ldflags)
-bitcoind_LDADD = $(LIBBITCOIN_NODE) $(bitcoin_bin_ldadd)
+waltercoind_SOURCES = $(waltercoin_daemon_sources) init/waltercoind.cpp
+waltercoind_CPPFLAGS = $(waltercoin_bin_cppflags)
+waltercoind_CXXFLAGS = $(waltercoin_bin_cxxflags)
+waltercoind_LDFLAGS = $(waltercoin_bin_ldflags)
+waltercoind_LDADD = $(LIBWALTERCOIN_NODE) $(waltercoin_bin_ldadd)
 
-bitcoin_node_SOURCES = $(bitcoin_daemon_sources) init/bitcoin-node.cpp
-bitcoin_node_CPPFLAGS = $(bitcoin_bin_cppflags)
-bitcoin_node_CXXFLAGS = $(bitcoin_bin_cxxflags)
-bitcoin_node_LDFLAGS = $(bitcoin_bin_ldflags)
-bitcoin_node_LDADD = $(LIBBITCOIN_NODE) $(bitcoin_bin_ldadd) $(LIBBITCOIN_IPC) $(LIBMULTIPROCESS_LIBS)
+waltercoin_node_SOURCES = $(waltercoin_daemon_sources) init/waltercoin-node.cpp
+waltercoin_node_CPPFLAGS = $(waltercoin_bin_cppflags)
+waltercoin_node_CXXFLAGS = $(waltercoin_bin_cxxflags)
+waltercoin_node_LDFLAGS = $(waltercoin_bin_ldflags)
+waltercoin_node_LDADD = $(LIBWALTERCOIN_NODE) $(waltercoin_bin_ldadd) $(LIBWALTERCOIN_IPC) $(LIBMULTIPROCESS_LIBS)
 
-# bitcoin-cli binary #
-bitcoin_cli_SOURCES = bitcoin-cli.cpp
-bitcoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-bitcoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+# waltercoin-cli binary #
+waltercoin_cli_SOURCES = waltercoin-cli.cpp
+waltercoin_cli_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(EVENT_CFLAGS)
+waltercoin_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+waltercoin_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-bitcoin_cli_SOURCES += bitcoin-cli-res.rc
+waltercoin_cli_SOURCES += waltercoin-cli-res.rc
 endif
 
-bitcoin_cli_LDADD = \
-  $(LIBBITCOIN_CLI) \
+waltercoin_cli_LDADD = \
+  $(LIBWALTERCOIN_CLI) \
   $(LIBUNIVALUE) \
-  $(LIBBITCOIN_UTIL) \
-  $(LIBBITCOIN_CRYPTO)
+  $(LIBWALTERCOIN_UTIL) \
+  $(LIBWALTERCOIN_CRYPTO)
 
-bitcoin_cli_LDADD += $(EVENT_LIBS)
+waltercoin_cli_LDADD += $(EVENT_LIBS)
 #
 
-# bitcoin-tx binary #
-bitcoin_tx_SOURCES = bitcoin-tx.cpp
-bitcoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bitcoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+# waltercoin-tx binary #
+waltercoin_tx_SOURCES = waltercoin-tx.cpp
+waltercoin_tx_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+waltercoin_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+waltercoin_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-bitcoin_tx_SOURCES += bitcoin-tx-res.rc
+waltercoin_tx_SOURCES += waltercoin-tx-res.rc
 endif
 
-bitcoin_tx_LDADD = \
+waltercoin_tx_LDADD = \
   $(LIBUNIVALUE) \
-  $(LIBBITCOIN_COMMON) \
-  $(LIBBITCOIN_UTIL) \
-  $(LIBBITCOIN_CONSENSUS) \
-  $(LIBBITCOIN_CRYPTO) \
+  $(LIBWALTERCOIN_COMMON) \
+  $(LIBWALTERCOIN_UTIL) \
+  $(LIBWALTERCOIN_CONSENSUS) \
+  $(LIBWALTERCOIN_CRYPTO) \
   $(LIBSECP256K1)
 #
 
-# bitcoin-wallet binary #
-bitcoin_wallet_SOURCES = bitcoin-wallet.cpp
-bitcoin_wallet_SOURCES += init/bitcoin-wallet.cpp
-bitcoin_wallet_CPPFLAGS = $(bitcoin_bin_cppflags)
-bitcoin_wallet_CXXFLAGS = $(bitcoin_bin_cxxflags)
-bitcoin_wallet_LDFLAGS = $(bitcoin_bin_ldflags)
-bitcoin_wallet_LDADD = \
-  $(LIBBITCOIN_WALLET_TOOL) \
-  $(LIBBITCOIN_WALLET) \
-  $(LIBBITCOIN_COMMON) \
-  $(LIBBITCOIN_UTIL) \
+# waltercoin-wallet binary #
+waltercoin_wallet_SOURCES = waltercoin-wallet.cpp
+waltercoin_wallet_SOURCES += init/waltercoin-wallet.cpp
+waltercoin_wallet_CPPFLAGS = $(waltercoin_bin_cppflags)
+waltercoin_wallet_CXXFLAGS = $(waltercoin_bin_cxxflags)
+waltercoin_wallet_LDFLAGS = $(waltercoin_bin_ldflags)
+waltercoin_wallet_LDADD = \
+  $(LIBWALTERCOIN_WALLET_TOOL) \
+  $(LIBWALTERCOIN_WALLET) \
+  $(LIBWALTERCOIN_COMMON) \
+  $(LIBWALTERCOIN_UTIL) \
   $(LIBUNIVALUE) \
-  $(LIBBITCOIN_CONSENSUS) \
-  $(LIBBITCOIN_CRYPTO) \
+  $(LIBWALTERCOIN_CONSENSUS) \
+  $(LIBWALTERCOIN_CRYPTO) \
   $(LIBSECP256K1) \
   $(BDB_LIBS) \
   $(SQLITE_LIBS)
 
 if TARGET_WINDOWS
-bitcoin_wallet_SOURCES += bitcoin-wallet-res.rc
+waltercoin_wallet_SOURCES += waltercoin-wallet-res.rc
 endif
 #
 
-# bitcoin-util binary #
-bitcoin_util_SOURCES = bitcoin-util.cpp
-bitcoin_util_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-bitcoin_util_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-bitcoin_util_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
+# waltercoin-util binary #
+waltercoin_util_SOURCES = waltercoin-util.cpp
+waltercoin_util_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+waltercoin_util_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+waltercoin_util_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS) $(PTHREAD_FLAGS)
 
 if TARGET_WINDOWS
-bitcoin_util_SOURCES += bitcoin-util-res.rc
+waltercoin_util_SOURCES += waltercoin-util-res.rc
 endif
 
-bitcoin_util_LDADD = \
-  $(LIBBITCOIN_COMMON) \
-  $(LIBBITCOIN_UTIL) \
+waltercoin_util_LDADD = \
+  $(LIBWALTERCOIN_COMMON) \
+  $(LIBWALTERCOIN_UTIL) \
   $(LIBUNIVALUE) \
-  $(LIBBITCOIN_CONSENSUS) \
-  $(LIBBITCOIN_CRYPTO) \
+  $(LIBWALTERCOIN_CONSENSUS) \
+  $(LIBWALTERCOIN_CRYPTO) \
   $(LIBSECP256K1)
 #
 
-# bitcoin-chainstate binary #
-bitcoin_chainstate_SOURCES = bitcoin-chainstate.cpp
-bitcoin_chainstate_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(BOOST_CPPFLAGS)
-bitcoin_chainstate_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+# waltercoin-chainstate binary #
+waltercoin_chainstate_SOURCES = waltercoin-chainstate.cpp
+waltercoin_chainstate_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES) $(BOOST_CPPFLAGS)
+waltercoin_chainstate_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 # $(LIBTOOL_APP_LDFLAGS) deliberately omitted here so that we can test linking
-# bitcoin-chainstate against libbitcoinkernel as a shared or static library by
+# waltercoin-chainstate against libwaltercoinkernel as a shared or static library by
 # setting --{en,dis}able-shared.
-bitcoin_chainstate_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(PTHREAD_FLAGS)
-bitcoin_chainstate_LDADD = $(LIBBITCOINKERNEL)
+waltercoin_chainstate_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(PTHREAD_FLAGS)
+waltercoin_chainstate_LDADD = $(LIBWALTERCOINKERNEL)
 #
 
-# bitcoinkernel library #
-if BUILD_BITCOIN_KERNEL_LIB
-lib_LTLIBRARIES += $(LIBBITCOINKERNEL)
+# waltercoinkernel library #
+if BUILD_WALTERCOIN_KERNEL_LIB
+lib_LTLIBRARIES += $(LIBWALTERCOINKERNEL)
 
-libbitcoinkernel_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS) $(PTHREAD_FLAGS)
-libbitcoinkernel_la_LIBADD = $(LIBBITCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) $(LIBSECP256K1)
-libbitcoinkernel_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT)
+libwaltercoinkernel_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS) $(PTHREAD_FLAGS)
+libwaltercoinkernel_la_LIBADD = $(LIBWALTERCOIN_CRYPTO) $(LIBUNIVALUE) $(LIBLEVELDB) $(LIBMEMENV) $(LIBSECP256K1)
+libwaltercoinkernel_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_WALTERCOIN_INTERNAL $(BOOST_CPPFLAGS) $(LEVELDB_CPPFLAGS) -I$(srcdir)/$(UNIVALUE_INCLUDE_DIR_INT)
 
-# libbitcoinkernel requires default symbol visibility, explicitly specify that
+# libwaltercoinkernel requires default symbol visibility, explicitly specify that
 # here so that things still work even when user configures with
 #   --enable-reduce-exports
 #
 # Note this is a quick hack that will be removed as we incrementally define what
 # to export from the library.
-libbitcoinkernel_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -fvisibility=default
+libwaltercoinkernel_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -fvisibility=default
 
 # TODO: For now, Specify -static in both CXXFLAGS and LDFLAGS when building for
 #       windows targets so libtool will only build a static version of this
 #       library. There are unresolved problems when building dll's for mingw-w64
 #       and attempting to statically embed libstdc++, libpthread, etc.
 if TARGET_WINDOWS
-libbitcoinkernel_la_LDFLAGS += -static
-libbitcoinkernel_la_CXXFLAGS += -static
+libwaltercoinkernel_la_LDFLAGS += -static
+libwaltercoinkernel_la_CXXFLAGS += -static
 endif
 
-# TODO: libbitcoinkernel is a work in progress consensus engine library, as more
+# TODO: libwaltercoinkernel is a work in progress consensus engine library, as more
 #       and more modules are decoupled from the consensus engine, this list will
 #       shrink to only those which are absolutely necessary.
-libbitcoinkernel_la_SOURCES = \
-  kernel/bitcoinkernel.cpp \
+libwaltercoinkernel_la_SOURCES = \
+  kernel/waltercoinkernel.cpp \
   arith_uint256.cpp \
   chain.cpp \
   chainparamsbase.cpp \
@@ -951,21 +951,21 @@ libbitcoinkernel_la_SOURCES = \
 
 # Required for obj/build.h to be generated first.
 # More details: https://www.gnu.org/software/automake/manual/html_node/Built-Sources-Example.html
-libbitcoinkernel_la-clientversion.l$(OBJEXT): obj/build.h
-endif # BUILD_BITCOIN_KERNEL_LIB
+libwaltercoinkernel_la-clientversion.l$(OBJEXT): obj/build.h
+endif # BUILD_WALTERCOIN_KERNEL_LIB
 #
 
-# bitcoinconsensus library #
-if BUILD_BITCOIN_LIBS
-lib_LTLIBRARIES += $(LIBBITCOINCONSENSUS)
+# waltercoinconsensus library #
+if BUILD_WALTERCOIN_LIBS
+lib_LTLIBRARIES += $(LIBWALTERCOINCONSENSUS)
 
-include_HEADERS = script/bitcoinconsensus.h
-libbitcoinconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libbitcoin_crypto_base_la_SOURCES) $(libbitcoin_consensus_a_SOURCES)
+include_HEADERS = script/waltercoinconsensus.h
+libwaltercoinconsensus_la_SOURCES = support/cleanse.cpp $(crypto_libwaltercoin_crypto_base_la_SOURCES) $(libwaltercoin_consensus_a_SOURCES)
 
-libbitcoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
-libbitcoinconsensus_la_LIBADD = $(LIBSECP256K1)
-libbitcoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_BITCOIN_INTERNAL
-libbitcoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libwaltercoinconsensus_la_LDFLAGS = $(AM_LDFLAGS) -no-undefined $(RELDFLAGS)
+libwaltercoinconsensus_la_LIBADD = $(LIBSECP256K1)
+libwaltercoinconsensus_la_CPPFLAGS = $(AM_CPPFLAGS) -I$(builddir)/obj -I$(srcdir)/secp256k1/include -DBUILD_WALTERCOIN_INTERNAL
+libwaltercoinconsensus_la_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 
 endif
 #
@@ -1001,12 +1001,12 @@ CLEANFILES += obj/build.h
 EXTRA_DIST = $(CTAES_DIST)
 
 
-config/bitcoin-config.h: config/stamp-h1
+config/waltercoin-config.h: config/stamp-h1
 	@$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-config/stamp-h1: $(top_srcdir)/$(subdir)/config/bitcoin-config.h.in $(top_builddir)/config.status
+config/stamp-h1: $(top_srcdir)/$(subdir)/config/waltercoin-config.h.in $(top_builddir)/config.status
 	$(AM_V_at)$(MAKE) -C $(top_builddir) $(subdir)/$(@)
-$(top_srcdir)/$(subdir)/config/bitcoin-config.h.in:  $(am__configure_deps)
-	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/bitcoin-config.h.in
+$(top_srcdir)/$(subdir)/config/waltercoin-config.h.in:  $(am__configure_deps)
+	$(AM_V_at)$(MAKE) -C $(top_srcdir) $(subdir)/config/waltercoin-config.h.in
 
 clean-local:
 	-$(MAKE) -C secp256k1 clean
@@ -1029,19 +1029,19 @@ if HARDEN
 	$(AM_V_at) $(PYTHON) $(top_srcdir)/contrib/devtools/security-check.py $(bin_PROGRAMS)
 endif
 
-libbitcoin_ipc_mpgen_input = \
+libwaltercoin_ipc_mpgen_input = \
   ipc/capnp/echo.capnp \
   ipc/capnp/init.capnp
-EXTRA_DIST += $(libbitcoin_ipc_mpgen_input)
+EXTRA_DIST += $(libwaltercoin_ipc_mpgen_input)
 %.capnp:
 
 # Explicitly list dependencies on generated headers as described in
 # https://www.gnu.org/software/automake/manual/html_node/Built-Sources-Example.html#Recording-Dependencies-manually
-ipc/capnp/libbitcoin_ipc_a-protocol.$(OBJEXT): $(libbitcoin_ipc_mpgen_input:=.h)
+ipc/capnp/libwaltercoin_ipc_a-protocol.$(OBJEXT): $(libwaltercoin_ipc_mpgen_input:=.h)
 
 if BUILD_MULTIPROCESS
-LIBBITCOIN_IPC=libbitcoin_ipc.a
-libbitcoin_ipc_a_SOURCES = \
+LIBWALTERCOIN_IPC=libwaltercoin_ipc.a
+libwaltercoin_ipc_a_SOURCES = \
   ipc/capnp/context.h \
   ipc/capnp/init-types.h \
   ipc/capnp/protocol.cpp \
@@ -1052,20 +1052,20 @@ libbitcoin_ipc_a_SOURCES = \
   ipc/process.cpp \
   ipc/process.h \
   ipc/protocol.h
-libbitcoin_ipc_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libbitcoin_ipc_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(LIBMULTIPROCESS_CFLAGS)
+libwaltercoin_ipc_a_CPPFLAGS = $(AM_CPPFLAGS) $(WALTERCOIN_INCLUDES)
+libwaltercoin_ipc_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) $(LIBMULTIPROCESS_CFLAGS)
 
 include $(MPGEN_PREFIX)/include/mpgen.mk
-libbitcoin_ipc_mpgen_output = \
-  $(libbitcoin_ipc_mpgen_input:=.c++) \
-  $(libbitcoin_ipc_mpgen_input:=.h) \
-  $(libbitcoin_ipc_mpgen_input:=.proxy-client.c++) \
-  $(libbitcoin_ipc_mpgen_input:=.proxy-server.c++) \
-  $(libbitcoin_ipc_mpgen_input:=.proxy-types.c++) \
-  $(libbitcoin_ipc_mpgen_input:=.proxy-types.h) \
-  $(libbitcoin_ipc_mpgen_input:=.proxy.h)
-nodist_libbitcoin_ipc_a_SOURCES = $(libbitcoin_ipc_mpgen_output)
-CLEANFILES += $(libbitcoin_ipc_mpgen_output)
+libwaltercoin_ipc_mpgen_output = \
+  $(libwaltercoin_ipc_mpgen_input:=.c++) \
+  $(libwaltercoin_ipc_mpgen_input:=.h) \
+  $(libwaltercoin_ipc_mpgen_input:=.proxy-client.c++) \
+  $(libwaltercoin_ipc_mpgen_input:=.proxy-server.c++) \
+  $(libwaltercoin_ipc_mpgen_input:=.proxy-types.c++) \
+  $(libwaltercoin_ipc_mpgen_input:=.proxy-types.h) \
+  $(libwaltercoin_ipc_mpgen_input:=.proxy.h)
+nodist_libwaltercoin_ipc_a_SOURCES = $(libwaltercoin_ipc_mpgen_output)
+CLEANFILES += $(libwaltercoin_ipc_mpgen_output)
 endif
 
 %.raw.h: %.raw

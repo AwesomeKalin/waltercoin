@@ -1,0 +1,93 @@
+#!/sbin/openrc-run
+
+# backward compatibility for existing gentoo layout 
+#
+if [ -d "/var/lib/waltercoin/.waltercoin" ]; then
+	WALTERCOIND_DEFAULT_DATADIR="/var/lib/waltercoin/.waltercoin"
+else
+	WALTERCOIND_DEFAULT_DATADIR="/var/lib/waltercoind"
+fi
+
+WALTERCOIND_CONFIGFILE=${WALTERCOIND_CONFIGFILE:-/etc/waltercoin/waltercoin.conf}
+WALTERCOIND_PIDDIR=${WALTERCOIND_PIDDIR:-/var/run/waltercoind}
+WALTERCOIND_PIDFILE=${WALTERCOIND_PIDFILE:-${WALTERCOIND_PIDDIR}/waltercoind.pid}
+WALTERCOIND_DATADIR=${WALTERCOIND_DATADIR:-${WALTERCOIND_DEFAULT_DATADIR}}
+WALTERCOIND_USER=${WALTERCOIND_USER:-${WALTERCOIN_USER:-waltercoin}}
+WALTERCOIND_GROUP=${WALTERCOIND_GROUP:-waltercoin}
+WALTERCOIND_BIN=${WALTERCOIND_BIN:-/usr/bin/waltercoind}
+WALTERCOIND_NICE=${WALTERCOIND_NICE:-${NICELEVEL:-0}}
+WALTERCOIND_OPTS="${WALTERCOIND_OPTS:-${WALTERCOIN_OPTS}}"
+
+name="Waltercoin Core Daemon"
+description="Waltercoin cryptocurrency P2P network daemon"
+
+command="/usr/bin/waltercoind"
+command_args="-pid=\"${WALTERCOIND_PIDFILE}\" \
+		-conf=\"${WALTERCOIND_CONFIGFILE}\" \
+		-datadir=\"${WALTERCOIND_DATADIR}\" \
+		-daemon \
+		${WALTERCOIND_OPTS}"
+
+required_files="${WALTERCOIND_CONFIGFILE}"
+start_stop_daemon_args="-u ${WALTERCOIND_USER} \
+			-N ${WALTERCOIND_NICE} -w 2000"
+pidfile="${WALTERCOIND_PIDFILE}"
+
+# The retry schedule to use when stopping the daemon. Could be either
+# a timeout in seconds or multiple signal/timeout pairs (like
+# "SIGKILL/180 SIGTERM/300")
+retry="${WALTERCOIND_SIGTERM_TIMEOUT}"
+
+depend() {
+	need localmount net
+}
+
+# verify
+# 1) that the datadir exists and is writable (or create it)
+# 2) that a directory for the pid exists and is writable
+# 3) ownership and permissions on the config file
+start_pre() {
+	checkpath \
+	-d \
+	--mode 0750 \
+	--owner "${WALTERCOIND_USER}:${WALTERCOIND_GROUP}" \
+	"${WALTERCOIND_DATADIR}"
+
+	checkpath \
+	-d \
+	--mode 0755 \
+	--owner "${WALTERCOIND_USER}:${WALTERCOIND_GROUP}" \
+	"${WALTERCOIND_PIDDIR}"
+
+	checkpath -f \
+	-o "${WALTERCOIND_USER}:${WALTERCOIND_GROUP}" \
+	-m 0660 \
+	"${WALTERCOIND_CONFIGFILE}"
+
+	checkconfig || return 1
+}
+
+checkconfig()
+{
+	if grep -qs '^rpcuser=' "${WALTERCOIND_CONFIGFILE}" && \
+		! grep -qs '^rpcpassword=' "${WALTERCOIND_CONFIGFILE}" ; then
+		eerror ""
+		eerror "ERROR: You must set a secure rpcpassword to run waltercoind."
+		eerror "The setting must appear in ${WALTERCOIND_CONFIGFILE}"
+		eerror ""
+		eerror "This password is security critical to securing wallets "
+		eerror "and must not be the same as the rpcuser setting."
+		eerror "You can generate a suitable random password using the following "
+		eerror "command from the shell:"
+		eerror ""
+		eerror "bash -c 'tr -dc a-zA-Z0-9 < /dev/urandom | head -c32 && echo'"
+		eerror ""
+		eerror "It is recommended that you also set alertnotify so you are "
+		eerror "notified of problems:"
+		eerror ""
+		eerror "ie: alertnotify=echo %%s | mail -s \"Waltercoin Alert\"" \
+			"admin@foo.com"
+		eerror ""
+		return 1
+	fi
+}
