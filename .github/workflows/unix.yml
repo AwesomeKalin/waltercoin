@@ -35,16 +35,9 @@ jobs:
                 cd ./src
                 ls
                 strip waltercoind
-                strip waltercoin-qt
             
             - name: Upload waltercoind to artifacts
               uses: actions/upload-artifact@v3
               with:
                 name: waltercoind (Linux)
                 path: ./src/waltercoind
-                
-            - name: Upload waltercoin-qt to artifacts
-              uses: actions/upload-artifact@v3
-              with:
-                name: waltercoin-qt (Linux)
-                path: ./src/waltercoin-qt
