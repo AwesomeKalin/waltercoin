@@ -41,7 +41,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  * transaction cannot be spent since it did not originally exist in the
  * database.
  *
- * CBlock(hash=000000000019d6, ver=1, hashPrevBlock=00000000000000, hashMerkleRoot=4a5e1e, nTime=1231006505, nBits=1d00ffff, nNonce=2083236893, vtx=1)
+ * CBlock(hash=000000000019d6, ver=1, hashPrevBlock=00000000000000, hashMerkleRoot=4a5e1e, nTime=1671734650, nBits=63a4a57a, nNonce=2083236893, vtx=1)
  *   CTransaction(hash=4a5e1e, ver=1, vin.size=1, vout.size=1, nLockTime=0)
  *     CTxIn(COutPoint(000000, -1), coinbase 04ffff001d0104455468652054696d65732030332f4a616e2f32303039204368616e63656c6c6f72206f6e206272696e6b206f66207365636f6e64206261696c6f757420666f722062616e6b73)
  *     CTxOut(nValue=50.00000000, scriptPubKey=0x5F1DF16B2B704C8A578D0B)
@@ -49,8 +49,8 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks";
-    const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+    const char* pszTimestamp = "\"FTX collapse shows crypto is 'too dangerous' not to regulate - Bank of England 22/12/2022 Sky News";
+    const CScript genesisOutputScript = CScript() << ParseHex("04aafe8f1495ec3361eae4e4aefb57826b628656f3dac9d93ab195cb02cfa2e4c1fc897d79a137048d752aa3992bd043d075d0b8b60084adc955f3d4004b28861c") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -65,7 +65,7 @@ public:
         consensus.signet_challenge.clear();
         consensus.nSubsidyHalvingInterval = 420690;
         consensus.script_flag_exceptions.emplace( // BIP16 exception
-            uint256S(), SCRIPT_VERIFY_NONE);
+            uint256S("0x0"), SCRIPT_VERIFY_NONE);
         consensus.script_flag_exceptions.emplace( // Taproot exception
             uint256S(), SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS);
         consensus.BIP34Height = 0;
@@ -110,10 +110,10 @@ public:
         m_assumed_blockchain_size = 496;
         m_assumed_chain_state_size = 6;
 
-        genesis = CreateGenesisBlock(1231006505, 2083236893, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1602159548, 1671734650, 0x7304b40, 1, 69 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f"));
-        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000000079dfbd1ce460257001a6a1157765fd8fe1b7fec2fbf30c6650d8fc88"));
+        assert(genesis.hashMerkleRoot == uint256S("0x07b7ca08f77f8414acdc4334b4b5b6cb3d38107eb7a64628d22d95f95be1d5bb"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
@@ -211,10 +211,10 @@ public:
         m_assumed_blockchain_size = 42;
         m_assumed_chain_state_size = 2;
 
-        genesis = CreateGenesisBlock(1296688602, 414098458, 0x1d00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1602159548, 1671734650, 0x7304b40, 1, 69 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000000000933ea01ad0ee984209779baaec3ced90fa3f408719526f8d77f4943"));
-        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000000079dfbd1ce460257001a6a1157765fd8fe1b7fec2fbf30c6650d8fc88"));
+        assert(genesis.hashMerkleRoot == uint256S("0x07b7ca08f77f8414acdc4334b4b5b6cb3d38107eb7a64628d22d95f95be1d5bb"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -344,10 +344,10 @@ public:
         nDefaultPort = 20022;
         nPruneAfterHeight = 1000;
 
-        genesis = CreateGenesisBlock(1598918400, 52613770, 0x1e0377ae, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1602159548, 1671734650, 0x7304b40, 1, 69 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x00000008819873e925422c1ff0f99f7cc9bbb232af63a077a480a3633bee1ef6"));
-        assert(genesis.hashMerkleRoot == uint256S("0x4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000000079dfbd1ce460257001a6a1157765fd8fe1b7fec2fbf30c6650d8fc88"));
+        assert(genesis.hashMerkleRoot == uint256S("0x07b7ca08f77f8414acdc4334b4b5b6cb3d38107eb7a64628d22d95f95be1d5bb"));
 
         vFixedSeeds.clear();
 
