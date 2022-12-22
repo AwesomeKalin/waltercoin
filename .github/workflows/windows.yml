@@ -1,0 +1,41 @@
+name: 'Build waltercoin for Windows'
+
+on:
+    push:
+        branches:
+            - 1.0
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Depenedencies
+              run: |
+                sudo apt update
+                sudo apt upgrade
+                sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+                sudo apt install g++-mingw-w64-x86-64-posix
+            
+            - name: Checkout repo
+              uses: actions/checkout@v3
+              
+            - name: Build waltercoin
+              run: |
+                cd depends
+                make HOST=x86_64-w64-mingw32
+                cd ..
+                ./autogen.sh
+                CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
+                make
+            
+            - name: Strip Executables
+              run: |
+                cd ./src
+                ls
+                strip waltercoind
+            
+            - name: Upload waltercoind to artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                name: waltercoind (Windows)
+                path: ./src/waltercoind.exe
