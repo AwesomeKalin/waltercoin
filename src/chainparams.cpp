@@ -67,15 +67,15 @@ public:
         consensus.script_flag_exceptions.emplace( // BIP16 exception
             uint256S("0x0"), SCRIPT_VERIFY_NONE);
         consensus.script_flag_exceptions.emplace( // Taproot exception
-            uint256S(), SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS);
+            uint256S("0x0"), SCRIPT_VERIFY_P2SH | SCRIPT_VERIFY_WITNESS);
         consensus.BIP34Height = 0;
-        consensus.BIP34Hash = uint256S();
+        consensus.BIP34Hash = uint256S("0x0");
         consensus.BIP65Height = 0; // 000000000000000004c2b624ed5d7756c508d90fd0da2c7c679febfa6c4735f0
         consensus.BIP66Height = 0; // 00000000000000000379eaa19dce8c9b722d46ae6a57c2f1a988119488b50931
         consensus.CSVHeight = 0; // 000000000000000004a1b34462cb8aeebd5799177f7a29cf28f2d1961716b5b5
         consensus.SegwitHeight = 0; // 0000000000000000001c8018d9cb3b742ef25114f27563e3fc4a1902167f9893
         consensus.MinBIP9WarningHeight = 0; // segwit activation height + miner confirmation window
-        consensus.powLimit = uint256S();
+        consensus.powLimit = uint256S("0x0");
         consensus.nPowTargetTimespan = 420; // two weeks
         consensus.nPowTargetSpacing = 69;
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -93,8 +93,8 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].nTimeout = 0; // August 11th, 2021
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].min_activation_height = 0; // Approximately November 12th, 2021
 
-        consensus.nMinimumChainWork = uint256S();
-        consensus.defaultAssumeValid = uint256S(); // 751565
+        consensus.nMinimumChainWork = uint256S("0x0");
+        consensus.defaultAssumeValid = uint256S("0x0"); // 751565
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
@@ -173,15 +173,15 @@ public:
         consensus.signet_challenge.clear();
         consensus.nSubsidyHalvingInterval = 420690;
         consensus.script_flag_exceptions.emplace( // BIP16 exception
-            uint256S(), SCRIPT_VERIFY_NONE);
+            uint256S("0x0"), SCRIPT_VERIFY_NONE);
         consensus.BIP34Height = 0;
-        consensus.BIP34Hash = uint256S();
+        consensus.BIP34Hash = uint256S("0x0");
         consensus.BIP65Height = 0; // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
         consensus.BIP66Height = 0; // 000000002104c8c45e99a8853285a3b592602a3ccde2b832481da85e9e4ba182
         consensus.CSVHeight = 0; // 00000000025e930139bac5c6c31a403776da130831ab85be56578f3fa75369bb
         consensus.SegwitHeight = 0; // 00000000002b980fcd729daaa248fd9316a5200e9b367f4ff2c42453e84201ca
         consensus.MinBIP9WarningHeight = 0; // segwit activation height + miner confirmation window
-        consensus.powLimit = uint256S();
+        consensus.powLimit = uint256S("0x0");
         consensus.nPowTargetTimespan = 420; // two weeks
         consensus.nPowTargetSpacing = 69;
         consensus.fPowAllowMinDifficultyBlocks = true;
@@ -200,7 +200,7 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TAPROOT].min_activation_height = 0; // No activation delay
 
         consensus.nMinimumChainWork = uint256S("0x00000000000000000000000000000000000000000000076f6e7cbd0beade5d20");
-        consensus.defaultAssumeValid = uint256S(); // 2344474
+        consensus.defaultAssumeValid = uint256S("0x0"); // 2344474
 
         pchMessageStart[0] = 0x08;
         pchMessageStart[1] = 0xb5;
@@ -380,7 +380,7 @@ public:
         consensus.signet_challenge.clear();
         consensus.nSubsidyHalvingInterval = 150;
         consensus.BIP34Height = 1; // Always active unless overridden
-        consensus.BIP34Hash = uint256();
+        consensus.BIP34Hash = uint256("0x0");
         consensus.BIP65Height = 1;  // Always active unless overridden
         consensus.BIP66Height = 1;  // Always active unless overridden
         consensus.CSVHeight = 1;    // Always active unless overridden
